@@ -23,7 +23,7 @@ var symbol_transit = {
 	color: '#000',
 	weight: 2,
 	opacity: 1,
-	fillOpacity: 0.5
+	fillOpacity: 0.7
 };
 
 var symbol_cleanupsites = {
@@ -32,9 +32,9 @@ var symbol_cleanupsites = {
 	color: '#000',
 	weight: 2,
 	opacity: 1,
-	fillOpacity: 0.8
+	fillOpacity: 1
 };
-		
+
 // import data
 // points
 var transitStops = new L.GeoJSON.AJAX('json/transitStops.geojson',
@@ -42,7 +42,11 @@ var transitStops = new L.GeoJSON.AJAX('json/transitStops.geojson',
 		pointToLayer: function(feature, latlng){
 			var options = symbol_transit;
 			return L.circleMarker(latlng, options)
-		}								
+		},
+		onEachFeature: function(feature, layer) {			
+			var content = '<p>Stop Name: <strong>' + feature.properties.stop_name + '</strong></p>'					
+			layer.bindPopup(content)
+		}
 });
 	
 var cleanupsites = new L.GeoJSON.AJAX('json/cleanupsites.geojson',
@@ -62,7 +66,7 @@ var cleanupsites = new L.GeoJSON.AJAX('json/cleanupsites.geojson',
 			}
 			return L.circleMarker(latlng, options)                    
 		},
-		onEachFeature: function(feature, layer){
+		onEachFeature: function(feature, layer){			
 			var content = '<p>Site Name: <strong>' + feature.properties.cleanupSiteName + '</strong><br />Status: <strong>' + feature.properties.siteStatus + '</strong><br />Site Page: <strong><a href="https://fortress.wa.gov/ecy/gsp/Sitepage.aspx?csid=' + feature.properties.csid + '" target="blank">Webpage</a></strong></p>'					
 			layer.bindPopup(content)
 		}				

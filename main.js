@@ -94,7 +94,8 @@ var layers = {
 
 // create legend div
 var legend = document.getElementById("legend")
-for (item in config){
+var legLabel = document.createElement("span")
+for (var item in config){
 	var legitem = document.createElement("div")
 	legitem.classList.add("legicon")
 	legitem.style.background = config[item].color
